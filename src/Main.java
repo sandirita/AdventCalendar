@@ -13,7 +13,7 @@ public class Main {
     static HashSet<Integer> list = new HashSet<>();
 
     public static void main(String[] args) throws FileNotFoundException {
-        try {
+ /*       try {
             File myObj = new File("input");
             Scanner myReader = new Scanner(myObj);
             while (true) {
@@ -33,10 +33,47 @@ public class Main {
         System.out.println(result);
         System.out.println(m);
         System.out.println(checksum());
-        System.out.println(differByOne());
+        System.out.println(differByOne()); */
+
+        System.out.println(nrOfSquares());
+
+    }
+    public static int nrOfSquares () throws FileNotFoundException {
+        File myInputObj = new File("inputFabricClaims");
+        Scanner myInputReader = new Scanner(myInputObj);
+        myInputReader.useDelimiter("[, :x\n]");
+        int [][] claims = new int[1000][1000];
+        int counter = 0;
+
+        while (myInputReader.hasNext()) {
+
+            int Id = myInputReader.skip("#").nextInt();
+            myInputReader.skip(" @ ");
+
+            //System.out.println(myInputReader.next());
+            int inchesFromTheLeftEdge = myInputReader.nextInt();
+            int inchesFromTheTopEdge = myInputReader.nextInt();
+            myInputReader.skip(": ");
+            int wide = myInputReader.nextInt();
+            myInputReader.skip("x");
+            int height = myInputReader.nextInt();
+            myInputReader.skip("\n");
+
+            for (int i = inchesFromTheLeftEdge; i < inchesFromTheLeftEdge + wide;  i++) {
+                for (int j = inchesFromTheTopEdge; j < inchesFromTheTopEdge + height; j++) {
+                    if (claims[i][j] == 0) {claims[i][j] = Id;}
+                    else if (claims[i][j] != -1) {
+                        ++counter;
+                        claims[i][j] = -1;}
+
+                }
+            }
+        }
+        return counter;
     }
 
-    public static int calibrate(int input) {
+
+    public static int calibrate ( int input){
         s += input;
         if (!(list.add(s))) {
             m = s;
@@ -46,7 +83,7 @@ public class Main {
         return s;
     }
 
-    public static int checksum() throws FileNotFoundException {
+    public static int checksum () throws FileNotFoundException {
         File myObjID = new File("inputIDs");
         Scanner myReader = new Scanner(myObjID);
         int a = 0;
@@ -72,7 +109,7 @@ public class Main {
         return a * d;
     }
 
-    public static String differByOne() throws FileNotFoundException {
+    public static String differByOne () throws FileNotFoundException {
         File myObjID = new File("inputIDs");
         Scanner myReader = new Scanner(myObjID);
 
@@ -98,6 +135,8 @@ public class Main {
                     return result;
                 }
             }
-        } return "not found";
+        }
+        return "not found";
     }
 }
+
